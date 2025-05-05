@@ -1,0 +1,85 @@
+Desafio novato
+
+
+
+#include <stdio.h>
+#include <string.h>
+
+// Define a estrutura de uma carta
+struct Carta {
+    char nome[50];
+    int ataque;
+    int defesa;
+    int magia;
+};
+
+// Função para criar uma carta
+struct Carta criar_carta(const char *nome, int ataque, int defesa, int magia) {
+    struct Carta nova_carta;
+    strcpy(nova_carta.nome, nome);
+    nova_carta.ataque = ataque;
+    nova_carta.defesa = defesa;
+    nova_carta.magia = magia;
+    return nova_carta;
+}
+
+int main() {
+    // Cria duas cartas para comparação
+    struct Carta carta1 = criar_carta("Dragão de Fogo", 80, 50, 70);
+    struct Carta carta2 = criar_carta("Cavaleiro Ágil", 60, 75, 30);
+
+    // Define o atributo a ser comparado (use números para representar os atributos)
+    // 0: nome (string - a comparação seria diferente)
+    // 1: ataque
+    // 2: defesa
+    // 3: magia
+    int atributo_comparacao = 1; // Comparando o ataque
+
+    printf("Carta 1: Nome: %s, Ataque: %d, Defesa: %d, Magia: %d\n",
+           carta1.nome, carta1.ataque, carta1.defesa, carta1.magia);
+    printf("Carta 2: Nome: %s, Ataque: %d, Defesa: %d, Magia: %d\n",
+           carta2.nome, carta2.ataque, carta2.defesa, carta2.magia);
+
+    printf("\nComparando o atributo: ");
+    if (atributo_comparacao == 1) {
+        printf("ataque\n");
+        if (carta1.ataque > carta2.ataque) {
+            printf("A carta '%s' tem um 'ataque' maior (%d) que a carta '%s' (%d).\n",
+                   carta1.nome, carta1.ataque, carta2.nome, carta2.ataque);
+        } else if (carta1.ataque < carta2.ataque) {
+            printf("A carta '%s' tem um 'ataque' maior (%d) que a carta '%s' (%d).\n",
+                   carta2.nome, carta2.ataque, carta1.nome, carta1.ataque);
+        } else {
+            printf("As cartas '%s' e '%s' têm o mesmo valor de 'ataque' (%d).\n",
+                   carta1.nome, carta2.nome, carta1.ataque);
+        }
+    } else if (atributo_comparacao == 2) {
+        printf("defesa\n");
+        if (carta1.defesa > carta2.defesa) {
+            printf("A carta '%s' tem uma 'defesa' maior (%d) que a carta '%s' (%d).\n",
+                   carta1.nome, carta1.defesa, carta2.nome, carta2.defesa);
+        } else if (carta1.defesa < carta2.defesa) {
+            printf("A carta '%s' tem uma 'defesa' maior (%d) que a carta '%s' (%d).\n",
+                   carta2.nome, carta2.defesa, carta1.nome, carta1.defesa);
+        } else {
+            printf("As cartas '%s' e '%s' têm o mesmo valor de 'defesa' (%d).\n",
+                   carta1.nome, carta2.nome, carta1.defesa);
+        }
+    } else if (atributo_comparacao == 3) {
+        printf("magia\n");
+        if (carta1.magia > carta2.magia) {
+            printf("A carta '%s' tem uma 'magia' maior (%d) que a carta '%s' (%d).\n",
+                   carta1.nome, carta1.magia, carta2.nome, carta2.magia);
+        } else if (carta1.magia < carta2.magia) {
+            printf("A carta '%s' tem uma 'magia' maior (%d) que a carta '%s' (%d).\n",
+                   carta2.nome, carta2.magia, carta1.nome, carta1.magia);
+        } else {
+            printf("As cartas '%s' e '%s' têm o mesmo valor de 'magia' (%d).\n",
+                   carta1.nome, carta2.nome, carta1.magia);
+        }
+    } else {
+        printf("Atributo de comparação inválido.\n");
+    }
+
+    return 0;
+}
