@@ -83,3 +83,133 @@ int main() {
 
     return 0;
 }
+
+
+
+
+Desafio intermediário 
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h> // Para a função exit()
+
+// Define a estrutura de uma carta (país)
+struct Carta {
+    char nome[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontos_turisticos;
+    float densidade_demografica;
+};
+
+// Função para criar uma carta (país)
+struct Carta criar_carta(const char *nome, int populacao, float area, float pib, int pontos_turisticos) {
+    struct Carta nova_carta;
+    strcpy(nova_carta.nome, nome);
+    nova_carta.populacao = populacao;
+    nova_carta.area = area;
+    nova_carta.pib = pib;
+    nova_carta.pontos_turisticos = pontos_turisticos;
+    nova_carta.densidade_demografica = (area > 0) ? (float)populacao / area : 0;
+    return nova_carta;
+}
+
+// Função para comparar as cartas com base no atributo escolhido
+void comparar_cartas(struct Carta carta1, struct Carta carta2, int atributo) {
+    printf("\nComparando: %s vs %s\n", carta1.nome, carta2.nome);
+    switch (atributo) {
+        case 1: // População
+            printf("Atributo: População\n");
+            printf("%s: %d\n", carta1.nome, carta1.populacao);
+            printf("%s: %d\n", carta2.nome, carta2.populacao);
+            if (carta1.populacao > carta2.populacao) {
+                printf("Vitória de %s!\n", carta1.nome);
+            } else if (carta1.populacao < carta2.populacao) {
+                printf("Vitória de %s!\n", carta2.nome);
+            } else {
+                printf("Empate!\n");
+            }
+            break;
+        case 2: // Área
+            printf("Atributo: Área\n");
+            printf("%s: %.2f km²\n", carta1.nome, carta1.area);
+            printf("%s: %.2f km²\n", carta2.nome, carta2.area);
+            if (carta1.area > carta2.area) {
+                printf("Vitória de %s!\n", carta1.nome);
+            } else if (carta1.area < carta2.area) {
+                printf("Vitória de %s!\n", carta2.nome);
+            } else {
+                printf("Empate!\n");
+            }
+            break;
+        case 3: // PIB
+            printf("Atributo: PIB\n");
+            printf("%s: %.2f trilhões\n", carta1.nome, carta1.pib);
+            printf("%s: %.2f trilhões\n", carta2.nome, carta2.pib);
+            if (carta1.pib > carta2.pib) {
+                printf("Vitória de %s!\n", carta1.nome);
+            } else if (carta1.pib < carta2.pib) {
+                printf("Vitória de %s!\n", carta2.nome);
+            } else {
+                printf("Empate!\n");
+            }
+            break;
+        case 4: // Pontos Turísticos
+            printf("Atributo: Número de Pontos Turísticos\n");
+            printf("%s: %d\n", carta1.nome, carta1.pontos_turisticos);
+            printf("%s: %d\n", carta2.nome, carta2.pontos_turisticos);
+            if (carta1.pontos_turisticos > carta2.pontos_turisticos) {
+                printf("Vitória de %s!\n", carta1.nome);
+            } else if (carta1.pontos_turisticos < carta2.pontos_turisticos) {
+                printf("Vitória de %s!\n", carta2.nome);
+            } else {
+                printf("Empate!\n");
+            }
+            break;
+        case 5: // Densidade Demográfica
+            printf("Atributo: Densidade Demográfica\n");
+            printf("%s: %.2f hab/km²\n", carta1.nome, carta1.densidade_demografica);
+            printf("%s: %.2f hab/km²\n", carta2.nome, carta2.densidade_demografica);
+            if (carta1.densidade_demografica < carta2.densidade_demografica) {
+                printf("Vitória de %s!\n", carta1.nome);
+            } else if (carta1.densidade_demografica > carta2.densidade_demografica) {
+                printf("Vitória de %s!\n", carta2.nome);
+            } else {
+                printf("Empate!\n");
+            }
+            break;
+        default:
+            printf("Opção inválida!\n");
+            break;
+    }
+}
+
+int main() {
+    // Define duas cartas de países (já cadastradas)
+    struct Carta brasil = criar_carta("Brasil", 214754993, 8515767.049, 1.92, 67, 0);
+    struct Carta canada = criar_carta("Canadá", 38246108, 9984670.00, 1.71, 31, 0);
+
+    int escolha;
+
+    do {
+        printf("\n--- Super Trunfo de Países ---\n");
+        printf("Escolha o atributo para comparar:\n");
+        printf("1 - População\n");
+        printf("2 - Área\n");
+        printf("3 - PIB (em trilhões de US$)\n");
+        printf("4 - Número de Pontos Turísticos\n");
+        printf("5 - Densidade Demográfica (hab/km²)\n");
+        printf("0 - Sair\n");
+        printf("Digite sua escolha: ");
+        scanf("%d", &escolha);
+
+        switch (escolha) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                comparar_cartas(brasil, canada, escolha);
+                break;
+            case 0:
