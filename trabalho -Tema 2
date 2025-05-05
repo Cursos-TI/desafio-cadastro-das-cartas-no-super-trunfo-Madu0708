@@ -213,3 +213,171 @@ int main() {
                 comparar_cartas(brasil, canada, escolha);
                 break;
             case 0:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Desafio Mestre
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// Define a estrutura de uma carta (país)
+struct Carta {
+    char nome[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontos_turisticos;
+    float densidade_demografica;
+};
+
+// Função para criar uma carta (país)
+struct Carta criar_carta(const char *nome, int populacao, float area, float pib, int pontos_turisticos) {
+    struct Carta nova_carta;
+    strcpy(nova_carta.nome, nome);
+    nova_carta.populacao = populacao;
+    nova_carta.area = area;
+    nova_carta.pib = pib;
+    nova_carta.pontos_turisticos = pontos_turisticos;
+    nova_carta.densidade_demografica = (area > 0) ? (float)populacao / area : 0;
+    return nova_carta;
+}
+
+// Função para exibir o menu de atributos, excluindo o atributo já escolhido
+void exibir_menu_atributos(int atributo_escolhido) {
+    printf("\nEscolha o atributo para comparar:\n");
+    printf("%s", (atributo_escolhido != 1) ? "1 - População\n" : "");
+    printf("%s", (atributo_escolhido != 2) ? "2 - Área\n" : "");
+    printf("%s", (atributo_escolhido != 3) ? "3 - PIB (em trilhões de US$)\n" : "");
+    printf("%s", (atributo_escolhido != 4) ? "4 - Número de Pontos Turísticos\n" : "");
+    printf("%s", (atributo_escolhido != 5) ? "5 - Densidade Demográfica (hab/km²)\n" : "");
+    printf("0 - Voltar ao menu principal\n");
+    printf("Digite sua escolha: ");
+}
+
+// Função para comparar as cartas com base em um atributo e retornar o resultado (1 para carta1 vence, 2 para carta2 vence, 0 para empate)
+int comparar_atributo(struct Carta carta1, struct Carta carta2, int atributo) {
+    switch (atributo) {
+        case 1: return (carta1.populacao > carta2.populacao) ? 1 : (carta1.populacao < carta2.populacao) ? 2 : 0;
+        case 2: return (carta1.area > carta2.area) ? 1 : (carta1.area < carta2.area) ? 2 : 0;
+        case 3: return (carta1.pib > carta2.pib) ? 1 : (carta1.pib < carta2.pib) ? 2 : 0;
+        case 4: return (carta1.pontos_turisticos > carta2.pontos_turisticos) ? 1 : (carta1.pontos_turisticos < carta2.pontos_turisticos) ? 2 : 0;
+        case 5: return (carta1.densidade_demografica < carta2.densidade_demografica) ? 1 : (carta1.densidade_demografica > carta2.densidade_demografica) ? 2 : 0;
+        default: return -1; // Indica um erro
+    }
+}
+
+int main() {
+    // Define duas cartas de países (já cadastradas)
+    struct Carta brasil = criar_carta("Brasil", 214754993, 8515767.049, 1.92, 67);
+    struct Carta canada = criar_carta("Canadá", 38246108, 9984670.00, 1.71, 31);
+
+    int escolha1 = -1, escolha2 = -1;
+    int resultado1, resultado2;
+    int pontuacao_brasil = 0, pontuacao_canada = 0;
+
+    do {
+        printf("\n--- Super Trunfo de Países ---\n");
+        printf("Escolha dois atributos diferentes para comparar:\n");
+
+        // Escolha do primeiro atributo
+        exibir_menu_atributos(-1); // -1 indica que nenhum atributo foi escolhido ainda
+        if (scanf("%d", &escolha1) != 1) {
+            printf("Entrada inválida. Tente novamente.\n");
+            while (getchar() != '\n'); // Limpar o buffer de entrada
+            escolha1 = -1;
+            continue;
+        }
+
+        if (escolha1 == 0) break; // Sair do menu principal
+        if (escolha1 < 1 || escolha1 > 5) {
+            printf("Opção inválida para o primeiro atributo. Tente novamente.\n");
+            escolha1 = -1;
+            continue;
+        }
+
+        // Escolha do segundo atributo
+        exibir_menu_atributos(escolha1); // Passa o primeiro atributo escolhido para excluí-lo do menu
+        if (scanf("%d", &escolha2) != 1) {
+            printf("Entrada inválida. Tente novamente.\n");
+            while (getchar() != '\n'); // Limpar o buffer de entrada
+            escolha2 = -1;
+            continue;
+        }
+
+        if (escolha2 == 0) continue; // Voltar ao menu principal
+        if (escolha2 < 1 || escolha2 > 5 || escolha2 == escolha1) {
+            printf("Opção inválida para o segundo atributo ou atributo igual ao primeiro. Tente novamente.\n");
+            escolha2 = -1;
+            continue;
+        }
+
+        // Realiza as comparações
+        resultado1 = comparar_atributo(brasil, canada, escolha1);
+        resultado2 = comparar_atributo(brasil, canada, escolha2);
+
+        // Calcula a pontuação
+        pontuacao_brasil = (resultado1 == 1 ? 1 : 0) + (resultado2 == 1 ? 1 : 0);
+        pontuacao_canada = (resultado1 == 2 ? 1 : 0) + (resultado2 == 2 ? 1 : 0);
+
+        // Exibe os resultados da rodada
+        printf("\n--- Resultado da Comparação ---\n");
+        printf("Países: %s vs %s\n", brasil.nome, canada.nome);
+
+        printf("Atributo 1: ");
+        switch (escolha1) {
+            case 1: printf("População (%d vs %d) - %s venceu\n", brasil.populacao, canada.populacao, ((resultado1 == 1) ? brasil.nome : ((resultado1 == 2) ? canada.nome : "Empate"))); break;
+            case 2: printf("Área (%.2f km² vs %.2f km²) - %s venceu\n", brasil.area, canada.area, ((resultado1 == 1) ? brasil.nome : ((resultado1 == 2) ? canada.nome : "Empate"))); break;
+            case 3: printf("PIB (%.2f tri vs %.2f tri) - %s venceu\n", brasil.pib, canada.pib, ((resultado1 == 1) ? brasil.nome : ((resultado1 == 2) ? canada.nome : "Empate"))); break;
+            case 4: printf("Pontos Turísticos (%d vs %d) - %s venceu\n", brasil.pontos_turisticos, canada.pontos_turisticos, ((resultado1 == 1) ? brasil.nome : ((resultado1 == 2) ? canada.nome : "Empate"))); break;
+            case 5: printf("Densidade Demográfica (%.2f hab/km² vs %.2f hab/km²) - %s venceu\n", brasil.densidade_demografica, canada.densidade_demografica, ((resultado1 == 1) ? brasil.nome : ((resultado1 == 2) ? canada.nome : "Empate"))); break;
+        }
+
+        printf("Atributo 2: ");
+        switch (escolha2) {
+            case 1: printf("População (%d vs %d) - %s venceu\n", brasil.populacao, canada.populacao, ((resultado2 == 1) ? brasil.nome : ((resultado2 == 2) ? canada.nome : "Empate"))); break;
+            case 2: printf("Área (%.2f km² vs %.2f km²) - %s venceu\n", brasil.area, canada.area, ((resultado2 == 1) ? brasil.nome : ((resultado2 == 2) ? canada.nome : "Empate"))); break;
+            case 3: printf("PIB (%.2f tri vs %.2f tri) - %s venceu\n", brasil.pib, canada.pib, ((resultado2 == 1) ? brasil.nome : ((resultado2 == 2) ? canada.nome : "Empate"))); break;
+            case 4: printf("Pontos Turísticos (%d vs %d) - %s venceu\n", brasil.pontos_turisticos, canada.pontos_turisticos, ((resultado2 == 1) ? brasil.nome : ((resultado2 == 2) ? canada.nome : "Empate"))); break;
+            case 5: printf("Densidade Demográfica (%.2f hab/km² vs %.2f hab/km²) - %s venceu\n", brasil.densidade_demografica, canada.densidade_demografica, ((resultado2 == 1) ? brasil.nome : ((resultado2 == 2) ? canada.nome : "Empate"))); break;
+        }
+
+        printf("\n--- Pontuação Final da Rodada ---\n");
+        printf("%s: %d ponto(s)\n", brasil.nome, pontuacao_brasil);
+        printf("%s: %d ponto(s)\n", canada.nome, pontuacao_canada);
+
+        if (pontuacao_brasil > pontuacao_canada) {
+            printf("Vitória da rodada: %s!\n", brasil.nome);
+        } else if (pontuacao_brasil < pontuacao_canada) {
+            printf("Vitória da rodada: %s!\n", canada.nome);
+        } else {
+            printf("Empate na rodada!\n");
+        }
+
+        escolha1 = -1; // Resetar para a próxima rodada
+        escolha2 = -1;
+
+    } while (1); // Loop infinito até o jogador escolher sair (opção 0 no primeiro menu)
+
+    printf("Obrigado por jogar Super Trunfo de Países!\n");
+
+    return 0;
+}
