@@ -1,3 +1,5 @@
+novato
+
 #include <stdio.h>
 #include <string.h>
 
@@ -25,6 +27,63 @@ int main() {
         printf("Esquerda\n");
         k++;
     } while (k < 8);
+    printf("\n");
+
+    return 0;
+}
+
+
+
+
+
+Médio 
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    // Simulação do movimento da Torre (5 casas para a direita)
+    printf("Movimento da Torre:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Direita\n");
+    }
+    printf("\n");
+
+    // Simulação do movimento do Bispo (5 casas na diagonal para cima e à direita)
+    printf("Movimento do Bispo:\n");
+    int j = 0;
+    while (j < 5) {
+        printf("Cima, Direita\n");
+        j++;
+    }
+    printf("\n");
+
+    // Simulação do movimento da Rainha (8 casas para a esquerda)
+    printf("Movimento da Rainha:\n");
+    int k = 0;
+    do {
+        printf("Esquerda\n");
+        k++;
+    } while (k < 8);
+    printf("\n");
+
+    // Simulação do movimento do Cavalo (duas casas para baixo e uma para a esquerda)
+    printf("Movimento do Cavalo:\n");
+    int movimento_vertical = 2;
+    int movimento_horizontal = 1;
+
+    // Primeiro loop: movimento vertical (duas casas para baixo)
+    for (int i = 0; i < movimento_vertical; i++) {
+        printf("Baixo\n");
+        // Segundo loop (aninhado): movimento horizontal (uma casa para a esquerda)
+        // Este loop executa apenas na última iteração do loop externo
+        if (i == movimento_vertical - 1) {
+            int l = 0;
+            while (l < movimento_horizontal) {
+                printf("Esquerda\n");
+                l++;
+            }
+        }
+    }
     printf("\n");
 
     return 0;
