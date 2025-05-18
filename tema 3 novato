@@ -88,3 +88,73 @@ int main() {
 
     return 0;
 }
+
+
+
+Mestre
+
+#include <stdio.h>
+#include <string.h>
+
+// Função recursiva para simular o movimento da Torre (para a direita)
+void moverTorreRecursivo(int casas) {
+    if (casas > 0) {
+        printf("Direita\n");
+        moverTorreRecursivo(casas - 1);
+    }
+}
+
+// Função recursiva para simular o movimento do Bispo (diagonal para cima e à direita)
+void moverBispoRecursivo(int casas) {
+    if (casas > 0) {
+        printf("Cima, Direita\n");
+        moverBispoRecursivo(casas - 1);
+    }
+}
+
+// Função recursiva para simular o movimento da Rainha (para a esquerda)
+void moverRainhaRecursivo(int casas) {
+    if (casas > 0) {
+        printf("Esquerda\n");
+        moverRainhaRecursivo(casas - 1);
+    }
+}
+
+int main() {
+    // Simulação do movimento da Torre (5 casas para a direita) com recursão
+    printf("Movimento da Torre (Recursivo):\n");
+    moverTorreRecursivo(5);
+    printf("\n");
+
+    // Simulação do movimento do Bispo (5 casas na diagonal para cima e à direita) com recursão e loops aninhados
+    printf("Movimento do Bispo (Recursivo com Loops Aninhados):\n");
+    for (int i = 0; i < 5; i++) { // Loop "vertical" (controla o número de passos)
+        for (int j = 0; j < 1; j++) { // Loop "horizontal" (sem efeito real aqui, apenas para aninhamento)
+            printf("Cima, Direita\n");
+        }
+    }
+    printf("\n");
+
+    // Simulação do movimento da Rainha (8 casas para a esquerda) com recursão
+    printf("Movimento da Rainha (Recursivo):\n");
+    moverRainhaRecursivo(8);
+    printf("\n");
+
+    // Simulação do movimento do Cavalo (duas casas para cima e uma para a direita) com loops complexos
+    printf("Movimento do Cavalo (Loops Complexos):\n");
+    for (int cima = 0, direita = 0; cima < 2 || direita < 1;) {
+        if (cima < 2) {
+            printf("Cima\n");
+            cima++;
+            continue; // Volta para a próxima iteração do loop externo
+        }
+        if (direita < 1) {
+            printf("Direita\n");
+            direita++;
+            break;    // Sai do loop assim que o movimento para a direita é completo
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
